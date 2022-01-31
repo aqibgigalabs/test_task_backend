@@ -31,7 +31,8 @@ router.post('/login', async (req, res) => {
     res.cookie('jwt', token, { httpOnly: true, secure: true, maxAge: 3600000 });
     res.status(200).send({
       success: 'true',
-      data: userFound
+      data: userFound,
+      token,
     });
   } catch (error) {
    res.status(500).send({
@@ -43,6 +44,7 @@ router.post('/login', async (req, res) => {
 
 router.post('/logout', protect, async (req, res) => {
   try {
+    console.log('----->>>>', req.user);
     res.cookie('jwt', '', { httpOnly: true, secure: true, maxAge: 3600000 });
     res.status(200).send({
       success: 'true',
